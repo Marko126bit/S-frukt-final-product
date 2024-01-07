@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Storage</title>
+</head>
+<body>
+    <h1>Main Storage</h1>
+    <p>Total Quantity: {{ main_storage.total_quantity }}</p>
+
+    <h2>Transaction History</h2>
+    <ul>
+        {% for transaction in transactions %}
+        <li>
+            {{ transaction.timestamp }} - 
+            Action: {{ transaction.action }} - 
+            Quantity: {{ transaction.quantity }} - 
+            Entity Type: {{ transaction.entity_type }} - 
+            Entity ID: {{ transaction.entity_id }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html
+
