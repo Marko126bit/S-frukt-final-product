@@ -1,0 +1,32 @@
+<!-- transfer.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer Quantities</title>
+    <!-- Add any additional CSS or JS links here -->
+</head>
+<body>
+    <h1>Transfer Quantities</h1>
+
+    <!-- Form to transfer quantities to/from the main storage -->
+    <form action="{{ url_for('transfer') }}" method="post">
+        <input type="hidden" name="entity_id" value="{{ entity_id }}"> <!-- Set this value dynamically based on the entity -->
+        <input type="hidden" name="entity_type" value="{{ entity_type }}"> <!-- Set to 'partner' or 'small_storage' -->
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required>
+
+        <label for="give">Give to Main Storage:</label>
+        <input type="radio" id="give" name="action" value="give" checked>
+
+        <label for="take">Take from Main Storage:</label>
+        <input type="radio" id="take" name="action" value="take">
+
+        <input type="submit" value="Transfer">
+    </form>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
+

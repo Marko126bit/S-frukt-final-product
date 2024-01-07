@@ -1,0 +1,30 @@
+<!-- app/templates/main_storage.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+</head>
+<body>
+    <h1>Main Storage</h1>
+    <p>Total Quantity: {{ main_storage.total_quantity }}</p>
+    <a href="{{ url_for('home') }}"><button>Home</button></a>
+
+    <h2>Current Total Quantity: {{ main_storage.total_quantity }}</h2>
+
+    <h3>Transaction Log</h3>
+    <ul>
+        {% for transaction in transactions %}
+        <li>
+            <strong>Date:</strong> {{ transaction.timestamp }} 
+            <strong>Action:</strong> {{ transaction.action }} 
+            <strong>Quantity:</strong> {{ transaction.quantity }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+</body>
+</html>
