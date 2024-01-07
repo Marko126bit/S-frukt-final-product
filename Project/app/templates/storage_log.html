@@ -1,0 +1,19 @@
+<!-- storage_log.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+</head>
+<body>
+    <h1>Storage Log for {{ storage.name }}</h1>
+    <a href="{{ url_for('home') }}"><button>Home</button></a>
+
+    <ul>
+        {% for log in logs %}
+            <li>{{ log.timestamp }} - {{ log.action }} - {{ log.quantity }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

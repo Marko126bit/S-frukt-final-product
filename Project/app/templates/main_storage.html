@@ -1,0 +1,78 @@
+<!-- main_storage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Storage</title>
+</head>
+<body>
+    <h1>Main Storage Management</h1>
+    <h2>Current Quantity in Main Storage: {{ main_storage.total_quantity }}</h2>
+
+    <!-- Adjust Main Storage Form -->
+    <h3>Adjust Main Storage</h3>
+    <form action="{{ url_for('add_to_main_storage') }}" method="post">
+        <div>
+            <label for="entity_type">Entity Type:</label>
+            <select name="entity_type" id="entity_type">
+                <option value="partner">Partner</option>
+                <option value="small_storage">Small Storage</option>
+            </select>
+        </div>
+        <div>
+            <label for="entity_id">Entity Name:</label>
+            <input type="text" name="entity_name" id="entity_name" required>
+        </div>
+        <div>
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" required>
+        </div>
+        <div>
+            <label for="action">Action:</label>
+            <select name="action" id="action">
+                <option value="add">Add</option>
+                <option value="subtract">Subtract</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Adjust Quantity">
+        </div>
+    </form>
+
+    <h2>Transaction Log</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Quantity</th>
+                <th>Entity Type</th>
+                <th>Entity ID</th>
+                <th>Timestamp</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.quantity }}</td>
+                <td>{{ transaction.entity_type }}</td>
+                <td>{{ transaction.entity_id }}</td>
+                <td>{{ transaction.timestamp }}</td>
+                <td>
+                    <form action="{{ url_for('delete_transaction', transaction_id=transaction.id) }}" method="post">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form action="{{ url_for('delete_all_transactions') }}" method="post">
+        <input type="submit" value="Delete All Transactions">
+    </form>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!-- create_small_storage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Small Storage</title>
+</head>
+<body>
+    <h1>Create Small Storage</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.name.label }} {{ form.name }}<br>
+        {{ form.quantity.label }} {{ form.quantity }}<br>
+        {{ form.submit() }}
+    </form>
+
+    <h2>Existing Small Storages</h2>
+    <ul>
+        {% for storage in small_storages %}
+        <li>{{ storage.name }} - Quantity: {{ storage.quantity }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
+
+
+
