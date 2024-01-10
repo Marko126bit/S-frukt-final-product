@@ -1,0 +1,75 @@
+<!-- partners.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Partners</title>
+    <!-- Include jQuery for AJAX functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Bootstrap CSS for styling, if needed -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<h1>Partners</h1>
+<!-- Partner creation form (existing) -->
+<form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} {{ form.name }}<br>
+    {{ form.quantity.label }} {{ form.quantity }}<br>
+    {{ form.submit() }}
+</form>
+
+<!-- List of partners (existing) -->
+<ul>
+{% for partner in partners %}
+    <li id="partner-{{ partner.id }}">
+        {{ partner.name }} - Quantity: {{ partner.quantity }}
+        <!-- Edit button triggers a modal or a form to edit the partner -->
+        <button class="edit-partner-btn btn btn-secondary" data-id="{{ partner.id }}">Edit</button>
+    </li>
+{% endfor %}
+</ul>
+
+<a href="{{ url_for('home') }}">Back to Home</a>
+
+<!-- AJAX script for editing partners -->
+<script>
+$(document).ready(function() {
+    $('.edit-partner-btn').click(function() {
+        var partnerId = $(this).data('id');
+        var newName = prompt('Enter new name for the partner (leave blank to keep current name):');
+        var newQuantity = prompt('Enter new quantity for the partner (leave blank to keep current quantity):');
+
+        var dataToSend = {};
+        if (newName) {
+            dataToSend.name = newName;
+        }
+        if (newQuantity) {
+            dataToSend.quantity = newQuantity;
+        }
+
+        $.ajax({
+            url: "{{ url_for('edit_partner', partner_id=0) }}".replace('0', partnerId),
+            method: 'POST',
+            data: dataToSend,
+            success: function(response) {
+                // Update the partner's display on the page as needed
+                alert('Partner updated successfully!');
+            },
+            error: function() {
+                alert('Error updating partner.');
+            }
+        });
+    });
+});
+</script>
+
+</script>
+</body>
+</html>
+
+
+
+
+
+

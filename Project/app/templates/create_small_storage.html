@@ -1,0 +1,68 @@
+<!-- create_small_storage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Small Storage</title>
+    <!-- Include jQuery for AJAX functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Create Small Storage</h1>
+<!-- Your existing form for creating a new storage -->
+<form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} {{ form.name }}<br>
+    {{ form.quantity.label }} {{ form.quantity }}<br>
+    {{ form.submit() }}
+</form>
+
+<h2>Existing Small Storages</h2>
+<ul>
+{% for storage in small_storages %}
+    <li id="storage-{{ storage.id }}">
+        {{ storage.name }} - Quantity: {{ storage.quantity }}
+        <!-- Edit button for each storage -->
+        <button class="edit-storage-btn btn btn-secondary" data-id="{{ storage.id }}">Edit</button>
+    </li>
+{% endfor %}
+</ul>
+
+<a href="{{ url_for('home') }}">Back to Home</a>
+
+<!-- AJAX script for editing small storages -->
+<script>
+$(document).ready(function() {
+    $('.edit-storage-btn').click(function() {
+        var storageId = $(this).data('id');
+        var newName = prompt('Enter new name for the storage (leave blank to keep current name):');
+        var newQuantity = prompt('Enter new quantity for the storage (leave blank to keep current quantity):');
+
+        var dataToSend = {};
+        if (newName) {
+            dataToSend.name = newName;
+        }
+        if (newQuantity) {
+            dataToSend.quantity = newQuantity;
+        }
+
+        $.ajax({
+            url: "{{ url_for('edit_small_storage', storage_id=0) }}".replace('0', storageId),
+            method: 'POST',
+            data: dataToSend,
+            success: function(response) {
+                // Update the storage's display on the page as needed
+                alert('Small storage updated successfully!');
+            },
+            error: function() {
+                alert('Error updating small storage.');
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
+
+
+
