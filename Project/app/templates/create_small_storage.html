@@ -1,0 +1,63 @@
+<!-- create_small_storage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer Storage</title>
+    <!-- Include jQuery for AJAX functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Create Small Storage</h1>
+
+    {% for message, category in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    
+    <form action="{{ url_for('create_small_storage') }}" method="post">
+        <input type="text" name="name" placeholder="Name of the small storage" required>
+        <input type="number" name="quantity" placeholder="Quantity" min="1" required>
+        <button type="submit">Create</button>
+    </form>
+    
+    <!-- Display existing small storages -->
+    <h2>Existing Small Storages</h2>
+    <ul>
+        {% for storage in small_storages %}
+            <li>{{ storage.name }} - Quantity: {{ storage.quantity }}</li>
+        {% endfor %}
+    </ul>
+    <script>
+    // JavaScript to handle form submission via AJAX
+    $(document).ready(function() {
+        $('#create-small-storage-form').submit(function(event) {
+            event.preventDefault();
+            var formData = {
+                'name': $('#name').val(),
+                'quantity': $('#quantity').val()
+            };
+            $.ajax({
+                url: '/create_small_storage',
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(response) {
+                    alert(response.success);
+                    // Update UI to reflect the new small storage
+                },
+                error: function(error) {
+                    alert(error.responseJSON.error);
+                }
+            });
+        });
+    });
+    </script>
+    
+    
+</body>
+</html>
+
+
+
+
