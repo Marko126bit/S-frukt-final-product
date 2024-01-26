@@ -10,3 +10,4 @@ delete option and delete all basically deletes small storage ,but when it does a
 
 1/25,26/2024
 updates: transaction log is done with some little tweaks.
+new update:just finished adjusting transaction log , now it can be sorted by day to make it easier for the user to see transactions each day, and for the purpose of the simplicity now we have a delete option if we were to test the application.
