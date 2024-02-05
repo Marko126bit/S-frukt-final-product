@@ -1,0 +1,64 @@
+<!-- templates/transaction_logs.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Logs</title>
+</head>
+<body>
+    <button onclick="sortTransactionsByDay()">Sort by Day</button>
+    <button onclick="deleteAllTransactions()">Delete All Transactions</button>
+    <h1>Transaction Logs</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Action</th>
+                <th>Source</th>
+                <th>Destination</th>
+                <th>Quantity</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.action_type }}</td>
+                <td>{{ log.source_name }}</td>
+                <td>{{ log.destination_name }}</td>
+                <td>{{ log.quantity }}</td>
+                <td>{{ log.local_timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+         function deleteAllTransactions() {
+        if (confirm("Are you sure you want to delete all transactions?")) {
+            // Make an AJAX call to delete all transactions
+            fetch('/delete_all_transactions', { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response, e.g., refresh the page or update the UI
+                    console.log(data);
+                    location.reload();  // Reload the page for simplicity
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function sortTransactionsByDay() {
+        // Make an AJAX call to fetch sorted transactions
+        fetch('/sort_transactions_by_day')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response, e.g., refresh the page or update the UI
+                console.log(data);
+                location.reload();  // Reload the page for simplicity
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    </script>
+</body>
+</html>
