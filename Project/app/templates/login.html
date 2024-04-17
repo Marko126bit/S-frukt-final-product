@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/favedit.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('static', filename='cherry-animation.js') }}"></script>
+    <title>S-FRUKT - Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: fixed;
+            background-color: black;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ffffff;
+            font-family: Arial, monospace;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .login-1 {
+            position: absolute;
+            top: 0%;
+
+        }
+
+        .card-2 {
+            background-color: rgb(0, 96, 160);
+            border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            width: 100px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: monospace;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <h1 class="card-2">Login</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endwith %}
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div>
+            <label style="color: black;" for="username">Username:</label><br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span class="error-message">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        <div>
+            <label style="color: black;" for="password">Password:</label><br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span class="error-message">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        <div>{{ form.submit() }}</div>
+    </form>
+</body>
+
+</html>

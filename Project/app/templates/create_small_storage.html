@@ -1,0 +1,485 @@
+<!-- create_small_storage.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favedit.ico">
+  <title>S-FRUKT - Create Small Storage</title>
+  <!-- Include jQuery for AJAX functionality -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{{ url_for('static', filename='cherry-animation.js') }}"></script>
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: fixed;
+    background-color: black;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    font-family: Arial, monospace;
+  }
+
+  button {
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #d3366d;
+    color: #ffffff;
+    border: 2px solid #d3366d;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-family: monospace;
+  }
+
+  .button-2 {
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #ff0000;
+    color: #ffffff;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-family: monospace;
+  }
+
+  button:hover {
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    max-width: 400px;
+  }
+
+  .centered-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .left-button-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .right-button-container {
+    position: fixed;
+    top: 11%;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: rgb(255, 255, 255);
+  }
+
+  .conditional-content {
+    display: none;
+  }
+
+  form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  label {
+    margin: 5px 0;
+    font-size: 18px;
+  }
+
+  input {
+    padding: 8px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    display: inline-block;
+  }
+
+  .li_2 {
+    background-color: #062b55;
+    margin: 7px;
+    padding: 10px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 130%;
+  }
+
+  .li_1 {
+    background-color: #ff0000;
+    margin: 7px;
+    padding: 8px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 130%;
+  }
+
+  .card {
+    background-color: rgba(73, 73, 73, 0.9);
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+  }
+
+  .card-2 {
+    background-color: #0060a0e6;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: fit-content;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: monospace;
+  }
+
+  .card-3 {
+    background-color: rgba(0, 96, 160, 0.9);
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    font-family: monospace;
+  }
+
+  .card-4 {
+    background-color: rgb(58, 146, 0);
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 19%;
+  }
+
+  .buttonedit {
+    margin: 5px;
+    padding: 10px 10px;
+    background-color: #ff0000;
+    color: #ffffff;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  .search-box {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  #storageSearch {
+    padding: 8px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+
+  .delete-all-button-container {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  #delete-all-partners-btn {
+    margin-top: 10px;
+  }
+
+  .button-3 {
+    border-radius: 0%;
+    margin: 8px;
+    border-color: #00c3ff;
+    background-color: #00c3ff;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+  }
+
+  .button-4 {
+    border-radius: 0%;
+    margin: 8px;
+    border-color: #dc3545;
+    background-color: #dc3545;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+  }
+
+  .right-button-container-1 {
+    position: fixed;
+    top: 65px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #d3366d;
+    border-color: #d3366d;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  .right-button-container-2 {
+    position: fixed;
+    top: 125px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #d3366d;
+    border-color: #d3366d;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  .right-button-container-3 {
+    position: fixed;
+    top: 186px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #d3366d;
+    border-color: #d3366d;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  .select-1 {
+    background-color: #494949;
+    color: #ffffff;
+    position: fixed;
+    top: 3%;
+    right: 1.4%;
+    font-family: monospace;
+    width: 15%;
+    padding: 13px;
+    border-radius: 8px;
+  }
+</style>
+
+<a href="{{ url_for('home') }}"><button class="button-2 left-button-container"><b>Home</b></button></a>
+
+<div>
+  <select class="select-1" onchange="navigateToPage(this.value)">
+    <option value="" disabled selected>Advanced Options</option>
+    <option value="{{ url_for('partners') }}">View Partners</option>
+    <option value="{{ url_for('adjust_main_storage_page') }}">View Main Storage</option>
+    <option value="/transaction_logs">View Transaction Logs</option>
+  </select>
+</div>
+
+<script>
+  function navigateToPage(url) {
+    if (url) {
+      window.location.href = url;
+    }
+  }
+</script>
+<h1 class="card-2">Create Small Storage</h1>
+
+{% for message, category in get_flashed_messages(with_categories=True) %}
+<div class="card-4 alert alert-{{ category }}">{{ message }}</div>
+{% endfor %}
+
+<form action="{{ url_for('create_small_storage') }}" method="post">
+  <input type="text" name="name" placeholder="Name of the small storage" required>
+  <input type="number" name="quantity" placeholder="Quantity" min="1" required>
+  <button class="right-button-container" id="delete-all-btn"><b>Delete All</b></button>
+  <button id="create_small_storage" type="submit"><b>Create Small Storage</b></button>
+</form>
+
+<h2 class="card-3">Existing Small Storages: <span id="total-small-storages">Loading...</span></h2>
+
+<div>
+  {% for storage in small_storages %}
+  <div class="card">
+    <p class="li_1"><b>{{ storage.name }}</b></p>
+    <p class="li_2">{{ storage.quantity }}</p>
+    <button class="edit-btn button-3" data-id="{{ storage.id }}"><b>Edit</b></button>
+    <button class="delete-btn button-4" data-id="{{ storage.id }}"><b>Delete</b></button>
+  </div>
+
+  {% endfor %}
+</div>
+
+<script>
+  // Function to update the total small storages count
+  function updateTotalSmallStoragesCount() {
+    var totalSmallStorages = document.querySelectorAll('.card').length;
+    document.getElementById('total-small-storages').textContent = totalSmallStorages;
+  }
+
+  $(document).ready(function () {
+    // Event handlers for form submission, delete button click, and delete all button click
+
+    // Update the count on page load
+    updateTotalSmallStoragesCount();
+  });
+
+  function createSmallStorage(formData) {
+  // Create new small storage
+  $.ajax({
+    url: '/create_small_storage',
+    type: 'POST',
+    data: formData,
+    success: function (response) {
+      if (response.success) {
+        alert("Small storage created successfully");
+        // Update UI to reflect the new small storage
+
+        // Disable form submission button
+        $('#create-small-storage-btn').prop('disabled', true);
+      } else {
+        alert("Not enough quantity in main storage or invalid input: " + response.error);
+      }
+    },
+    error: function (error) {
+      alert("Error creating small storage: " + error.responseJSON.error);
+    }
+  });
+}
+
+
+ // Delete button click handler
+$('.delete-btn').on('click', function () {
+    var storageId = $(this).data('id');
+    var $card = $(this).closest('.card');
+
+    $.ajax({
+        url: '/delete_small_storage',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ id: storageId }),
+        dataType: 'json',
+        success: function (response) {
+            alert(response.success);
+            $card.remove(); // Remove the card from the UI
+        },
+        error: function (error) {
+            alert(error.responseJSON.error);
+        }
+    });
+});
+
+
+  // Delete all button click handler
+$('#delete-all-btn').on('click', function () {
+    if (confirm("Are you sure you want to delete all storages?")) {
+        $.ajax({
+            url: '/delete_all_small_storages',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (response) {
+                alert(response.success);
+                $('.card').remove(); // Remove all cards from the UI
+            },
+            error: function (error) {
+                alert(error.responseJSON.error);
+            }
+        });
+    }
+});
+
+
+
+  $(document).ready(function () {
+    $('.edit-btn').on('click', function () {
+      var storageId = $(this).data('id');
+      var currentName = $(this).closest('li').find('.storage-name').text().trim();
+      var currentQuantity = parseInt($(this).closest('li').find('.storage-quantity').text().trim());
+
+      var newName = prompt("Enter the new name for the storage:", currentName);
+      var newQuantity = prompt("Enter the new quantity for the storage:", currentQuantity);
+
+      var dataToSend = { id: storageId };
+      if (newName && newName !== currentName) {
+        dataToSend.name = newName;
+      }
+      if (newQuantity !== null && newQuantity !== currentQuantity) {
+        dataToSend.quantity = newQuantity;
+      }
+
+      if (dataToSend.name || dataToSend.hasOwnProperty('quantity')) {
+        $.ajax({
+          url: '/edit_small_storage',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(dataToSend),
+          dataType: 'json',
+          success: function (response) {
+            alert(response.success);
+            location.reload(); // Reload the page to update the list
+          },
+          error: function (error) {
+            alert(error.responseJSON.error);
+          }
+        });
+      } else {
+        alert('No changes to update.');
+      }
+    });
+  });
+
+  function fetchAndUpdateChart() {
+    fetch('/api/partner_data')
+      .then(response => response.json())
+      .then(data => {
+        // Prepare the chart data
+        const labels = data.map(entry => entry.name);
+        const quantities = data.map(entry => entry.quantity);
+
+        // Update the chart with new data
+        totalQuantityChart.data.labels = labels;
+        totalQuantityChart.data.datasets[1].data = quantities;
+
+        // Update the chart
+        totalQuantityChart.update();
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  // Call the function to fetch and update the chart on page load
+  fetchAndUpdateChart();
+
+</script>
+
+</html>
