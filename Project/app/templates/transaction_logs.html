@@ -1,0 +1,284 @@
+<!-- templates/transaction_logs.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/favedit.ico">
+    <script src="{{ url_for('static', filename='cherry-animation.js') }}"></script>
+    <script src="/static/favicon.js"></script>
+    <title>S-FRUKT - Transaction Logs</title>
+</head>
+
+<!--nuclear235 - change path to your liking or put nigga background like: "background-color: black;" -->
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: fixed;
+        background-color: #000000;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #ffffff;
+        font-family: Arial, monospace;
+    }
+
+    .button-1 {
+        padding: 15px 15px;
+        background-color: #fcc404;
+        color: #ffffff;
+        border: 5px solid #fcc404;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 19px;
+        font-family: monospace;
+    }
+
+    .button-2 {
+        margin: 5px;
+        padding: 10px 15px;
+        background-color: #ff0000;
+        color: #ffffff;
+        border: 2px solid #ff0000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        font-family: monospace;
+    }
+
+    button:hover {
+        background-color: rgb(0, 0, 0);
+        color: #ffffff;
+    }
+
+    .button-container-1 {
+        justify-content: center;
+        width: 50%;
+        max-width: 400px;
+    }
+
+    .centered-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-button-container {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .right-button-container {
+        position: fixed;
+        top: 11%;
+        right: 19px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+    }
+
+    .conditional-content {
+        display: none;
+    }
+
+    form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    label {
+        margin: 5px 0;
+        font-size: 18px;
+    }
+
+    input {
+        padding: 8px;
+        margin: 5px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .li_2 {
+        background-color: #0026ff;
+        margin: 7px;
+        padding: 10px;
+        text-align: center;
+        font-family: monospace;
+        font-size: 110%;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .li_1 {
+        background-color: #ff0000;
+        margin: 7px;
+        padding: 8px;
+        text-align: center;
+        font-family: monospace;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+        background-color: #494949;
+        margin: 10px;
+        padding: 10px;
+        text-align: center;
+        width: 290px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+        width: 55%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 0px;
+        color: #000000;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #333333;
+        color: #ffffff;
+    }
+
+    tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+    
+    .right-button-container-1 {
+        position: fixed;
+        top: 100px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #d3366d;
+        border-color: #d3366d;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .select-1 {
+        background-color: #494949;
+        color: #ffffff;
+        position: fixed;
+        top: 3%;
+        right: 1.4%;
+        font-family: monospace;
+        width: 13%;
+        padding: 13px;
+        border-radius: 8px;
+    }
+</style>
+
+<h1 class="card">Evidencija transakcija</h1>
+
+<a href="{{ url_for('home') }}"><button class="button-2 left-button-container">Početna</button></a>
+<div>
+    <select class="select-1" onchange="navigateToPage(this.value)">
+        <option value="" disabled selected>Napredne Opcije</option>
+        <option value="{{ url_for('create_small_storage') }}">Pregledaj Otkupljivače</option>
+        <option value="{{ url_for('adjust_main_storage_page') }}">Pregledaj Glavno Skladište</option>
+        <option value="/transaction_logs">Pregledaj Dnevnik Transakcija</option>
+    </select>
+</div>
+<script>
+    function navigateToPage(url) {
+        if (url) {
+            window.location.href = url;
+        }
+    }
+</script>
+</body>
+
+<body>
+    <div class="right-button-container">
+        <button class="button-1" onclick="deleteAllTransactions()">Obriši sve</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Akcija</th>
+                <th>Izvor</th>
+                <th>Odredište</th>
+                <th>Količina</th>
+                <th>Vreme</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for log in logs %}
+                <td>{{ log.id }}</td>
+                <td>{{ log.action_type }}</td>
+                <td>{{ log.source_name }}</td>
+                <td>{{ log.destination_name }}</td>
+                <td>{{ log.quantity }}</td>
+                <td>{{ log.local_timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+<script>
+    function deleteAllTransactions() {
+        if (confirm("Da li ste sigurni da želite da obrišete sve transakcije?")) {
+            // Make an AJAX call to delete all transactions
+            fetch('/delete_all_transactions', { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response, e.g., refresh the page or update the UI
+                    console.log(data);
+                    location.reload();  // Reload the page for simplicity
+                })
+                .catch(error => console.error('Greška:', error));
+        }
+    }
+    
+
+    function sortTransactionsByDay() {
+        // Make an AJAX call to fetch sorted transactions
+        fetch('/sort_transactions_by_day')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response, e.g., refresh the page or update the UI
+                console.log(data);
+                location.reload();  // Reload the page for simplicity
+            })
+            .catch(error => console.error('Greška:', error));
+    }
+
+</script>
+
+</html>
