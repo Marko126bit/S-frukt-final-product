@@ -1,0 +1,11 @@
+flask
+flask_sqlalchemy
+flask_login
+flask_bcrypt
+flask_caching
+flask_wtf
+wtforms
+email_validator
+pytz
+sqlalchemy
+werkzeug
