@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/favedit.ico">
+    <title>S-FRUKT - Adjust Main Storage</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='cherry-animation.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favedit.ico') }}">
+
+
+//-------------------------------------------------------------------------------------------
+</script>
+
+</head>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: fixed;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        color: #ffffff;
+        font-family: Arial, monospace;
+        background-color: black;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .button-1 {
+        margin: 10px;
+        padding: 10px 15px;
+        background-color: #ff0000;
+        border: 2px solid #ff0000;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: monospace;
+        color: #ffffff
+    }
+
+    .button-2 {
+        margin: 10px;
+        padding: 10px 15px;
+        background-color: rgb(0, 160, 0);
+        border: 2px solid rgb(0, 160, 0)d;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: monospace;
+        color: #ffffff
+    }
+
+    form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    label {
+        margin: 5px 0;
+        font-size: 18px;
+    }
+
+    input {
+        padding: 8px;
+        margin: 5px 0;
+        width: 17%;
+        box-sizing: border-box;
+        border-radius: 1%;
+    }
+
+    select {
+        padding: 8px;
+        margin: 5px 0;
+        width: 17%;
+        box-sizing: border-box;
+        border-radius: 1%;
+    }
+
+    .card-2 {
+        background-color: rgb(0, 96, 160, 0.9);
+        color: #ffffff;
+        border-radius: 5px;
+        margin: 10px;
+        padding: 10px;
+        text-align: center;
+        width: 270px;
+    }
+
+    .left-button-container {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #ff0000;
+        border-color: #ff0000;
+        transition: all 0.3s ease;
+    }
+
+    .right-button-container-1 {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #d3366d;
+        border-color: #d3366d;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .right-button-container-2 {
+        position: fixed;
+        top: 70px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #d3366d;
+        border-color: #d3366d;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .right-button-container-3 {
+        position: fixed;
+        top: 135px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #d3366d;
+        border-color: #d3366d;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .select-1 {
+        background-color: #494949;
+        color: #ffffff;
+        position: fixed;
+        top: 2%;
+        right: 1.3%;
+        font-family: monospace;
+        width: fit-content;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+</style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    h1, h2 {
+        color: #333;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin: 5px 0;
+    }
+    .positive, .negative {
+        padding: 10px;
+        margin: 10px 0;
+    }
+    .positive {
+        background-color: #e0ffe0;
+    }
+    .negative {
+        background-color: #ffe0e0;
+    }
+</style>
+</head>
+<body>
+<h1>Saldo</h1>
+
+<h2>Pozitivni Dug</h2>
+<div class="positive">
+    <ul>
+        {% for card, positive_owed in cards_positive_owed_dict.items() %}
+            <li><strong>{{ card }}</strong>
+                <ul>
+                    {% for name, amount in positive_owed %}
+                        <li>{{ name }}: {{ amount }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<h2>Negativni Dug</h2>
+<div class="negative">
+    <ul>
+        {% for card, negative_owed in cards_negative_owed_dict.items() %}
+            <li><strong>{{ card }}</strong>
+                <ul>
+                    {% for name, amount in negative_owed %}
+                        <li>{{ name }}: {{ amount }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<a href="{{ url_for('download_excel') }}" class="btn btn-primary">Preuzmite Excel</a>
+</body>
+</body>
+</html>
+</div>
+<a href="{{ url_for('home') }}"><button class="left-button-container button-1"><b>Početna</b></button></a>
+<div>
+    <select class="select-1" onchange="navigateToPage(this.value)">
+        <option value="" disabled selected>Napredne Opcije</option>
+        <option value="{{ url_for('partners') }}">Pogledaj Partnere</option>
+        <option value="{{ url_for('create_small_storage_page') }}">Pogledaj Otkupljivače</option>
+        <option value="/transaction_logs">Pogledaj Dnevnik Transakcija</option>
+    </select>
+</div>
+</html>
+</body>
+
+<script>
+   $(document).ready(function() {
+  $("#fetch-transactions-report").click(function() {
+    $.ajax({
+      url: '/report/transactions', // The route you defined for the report
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        var reportHtml = '<h2>Transactions Report</h2>';
+
+        // Partner to Main Storage Transactions
+        reportHtml += '<h3>Partner to Main Storage</h3>';
+        if (data.partner_to_main.length) {
+          reportHtml += '<ul>';
+          data.partner_to_main.forEach(function(transaction) {
+            var destination = transaction.destination ? transaction.destination : 'Not specified';
+            var timestamp = new Date(transaction.timestamp).toLocaleString("en-US", {timeZone: "Europe/Belgrade"});
+            reportHtml += '<li>Transaction ID: ' + transaction.transaction_id +
+                          ', Source: ' + transaction.source +
+                          ', Destination: ' + destination +
+                          ', Quantity: ' + transaction.quantity +
+                          ', Timestamp: ' + timestamp + '</li>';
+          });
+          reportHtml += '</ul>';
+        } else {
+          reportHtml += '<p>No transactions found.</p>';
+        }
+
+        // Main Storage to Small Storage Transactions
+        reportHtml += '<h3>Main Storage to Small Storage</h3>';
+        if (data.main_to_small.length) {
+          reportHtml += '<ul>';
+          data.main_to_small.forEach(function(transaction) {
+            var destination = transaction.destination ? transaction.destination : 'Not specified';
+            var timestamp = new Date(transaction.timestamp).toLocaleString("en-US", {timeZone: "Europe/Belgrade"});
+            reportHtml += '<li>Transaction ID: ' + transaction.transaction_id +
+                          ', Source: ' + transaction.source +
+                          ', Destination: ' + destination +
+                          ', Quantity: ' + transaction.quantity +
+                          ', Timestamp: ' + timestamp + '</li>';
+          });
+          reportHtml += '</ul>';
+        } else {
+          reportHtml += '<p>No transactions found.</p>';
+        }
+
+        // Append the constructed HTML to the report container
+        $('#report-container').html(reportHtml);
+      },
+      error: function(xhr, status, error) {
+        var errorMessage = xhr.status + ': ' + xhr.statusText;
+        alert('Error - ' + errorMessage);
+      }
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
+    function navigateToPage(url) {
+        if (url) {
+            window.location.href = url;
+        }
+    }
+</script>
+
+</html>

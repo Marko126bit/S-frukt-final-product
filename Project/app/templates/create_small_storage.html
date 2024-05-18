@@ -1,0 +1,486 @@
+<!-- create_small_storage.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favedit.ico">
+  <title>S-FRUKT - Create Small Storage</title>
+  <!-- Include jQuery for AJAX functionality -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{{ url_for('static', filename='cherry-animation.js') }}"></script>
+  <script src="/static/favicon.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: fixed;
+    background-color: black;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    font-family: Arial, monospace;
+  }
+
+  button {
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #d3366d;
+    color: #ffffff;
+    border: 2px solid #d3366d;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-family: monospace;
+  }
+
+  .button-2 {
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #ff0000;
+    color: #ffffff;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-family: monospace;
+  }
+
+  button:hover {
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    max-width: 400px;
+  }
+
+  .centered-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .left-button-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .right-button-container {
+    position: fixed;
+    top: 11%;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: rgb(255, 255, 255);
+  }
+
+  .conditional-content {
+    display: none;
+  }
+
+  form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  label {
+    margin: 5px 0;
+    font-size: 18px;
+  }
+
+  input {
+    padding: 8px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    display: inline-block;
+  }
+
+  .li_2 {
+    background-color: #062b55;
+    margin: 7px;
+    padding: 10px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 130%;
+  }
+
+  .li_1 {
+    background-color: #ff0000;
+    margin: 7px;
+    padding: 8px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 130%;
+  }
+
+  .card {
+    background-color: rgba(73, 73, 73, 0.9);
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+  }
+
+  .card-2 {
+    background-color: #0060a0e6;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: fit-content;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: monospace;
+  }
+
+  .card-3 {
+    background-color: rgba(0, 96, 160, 0.9);
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    font-family: monospace;
+  }
+
+  .card-4 {
+    background-color: rgb(58, 146, 0);
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 19%;
+  }
+
+  .buttonedit {
+    margin: 5px;
+    padding: 10px 10px;
+    background-color: #ff0000;
+    color: #ffffff;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  .search-box {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  #storageSearch {
+    padding: 8px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+
+  .delete-all-button-container {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  #delete-all-partners-btn {
+    margin-top: 10px;
+  }
+
+  .button-3 {
+    border-radius: 0%;
+    margin: 8px;
+    border-color: #00c3ff;
+    background-color: #00c3ff;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+  }
+
+  .button-4 {
+    border-radius: 0%;
+    margin: 8px;
+    border-color: #dc3545;
+    background-color: #dc3545;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+  }
+
+  .right-button-container-1 {
+    position: fixed;
+    top: 65px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #d3366d;
+    border-color: #d3366d;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  .right-button-container-2 {
+    position: fixed;
+    top: 125px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #d3366d;
+    border-color: #d3366d;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  .right-button-container-3 {
+    position: fixed;
+    top: 186px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #d3366d;
+    border-color: #d3366d;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  .select-1 {
+    background-color: #494949;
+    color: #ffffff;
+    position: fixed;
+    top: 3%;
+    right: 1.4%;
+    font-family: monospace;
+    width: 15%;
+    padding: 13px;
+    border-radius: 8px;
+  }
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Your CSS and other head content here -->
+</head>
+<body>
+    <a href="{{ url_for('home') }}"><button class="button-2 left-button-container"><b>Početna</b></button></a>
+
+    <div>
+        <select class="select-1" onchange="navigateToPage(this.value)">
+            <option value="" disabled selected>Napredne Opcije</option>
+            <option value="{{ url_for('partners') }}">Pogledaj Partnere</option>
+            <option value="{{ url_for('adjust_main_storage_page') }}">Pogledaj Glavno Skladište</option>
+            <option value="/transaction_logs">Pogledaj Dnevnik Transakcija</option>
+        </select>
+    </div>
+
+    <script>
+        function navigateToPage(url) {
+            if (url) {
+                window.location.href = url;
+            }
+        }
+    </script>
+   <style>
+    /* Define custom card style */
+    .card {
+        background-color: #333;
+        color: white;
+    }
+</style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="container mt-5">
+      <h1>Otkupljivači</h1>
+  
+      <form method="post" id="creationForm">
+          {{ form.csrf_token }}
+          <div>
+              {{ form.name.label }}
+              {{ form.name(class="form-control") }}
+          </div>
+          <div>
+              {{ form.quantity.label }}
+              {{ form.quantity(class="form-control") }}
+          </div>
+          <div>
+              {{ form.partner_id.label }}
+              {{ form.partner_id(class="form-control") }}
+          </div>
+          <button type="submit">Create</button>
+      </form>
+        
+      <h2>Small Storage Entries</h2>
+      <ul id="smallStorageList">
+          {% for small_storage in small_storages %}
+              {% if not small_storage.is_main_storage %}
+                  <li id="entry{{ small_storage.id }}" class="card">
+                      {{ small_storage.name }} - Quantity: <span class="quantity">{{ small_storage.quantity }}</span>
+                      <button onclick="editEntry({{ small_storage.id }}, '{{ small_storage.partner_id }}')">Edit</button>
+                      <button onclick="deleteEntry({{ small_storage.id }})">Delete</button>
+                      <form action="{{ url_for('return_small_storage', small_storage_id=small_storage.id) }}" method="post" class="return-form">
+                          <input type="number" name="quantity" class="form-control" placeholder="Quantity to return" required>
+                          <select name="partner_id" class="form-control" required>
+                              {% for partner in partners %}
+                                  <option value="{{ partner.id }}">{{ partner.name }}</option>
+                              {% endfor %}
+                          </select>
+                          <button type="submit" class="btn btn-primary mt-2">Return</button>
+                      </form>
+                  </li>
+              {% endif %}
+          {% endfor %}
+      </ul>
+        <!-- Hidden form for editing -->
+        <form id="editForm" method="post" style="display: none;">
+            {{ form.csrf_token }}
+            <div>
+                {{ form.name.label }}
+                <input type="text" name="name" id="editName">
+            </div>
+            <div>
+                {{ form.quantity.label }}
+                <input type="number" name="quantity" id="editQuantity" pattern="\d*" title="Please enter numbers only" step="1">
+            </div>
+            <div>
+                {{ form.partner_id.label }}
+                {{ form.partner_id(class="form-control", id="editPartner") }}
+            </div>
+            <button type="submit">Update</button>
+        </form>
+    
+        <!-- Hidden form for deletion -->
+        <form id="deleteForm" method="post" style="display: none;">
+            {{ form.csrf_token }}
+            <button type="submit" id="deleteButton">Confirm Delete</button>
+        </form>
+    </div>
+<script>
+  function editEntry(id, partnerId) {
+      console.log("Editing entry with ID:", id);
+      const entry = document.getElementById(`entry${id}`);
+      const name = entry.innerText.split(" - ")[0];
+      const quantityText = entry.innerText.split(" - ")[1].split(": ")[1];
+      const quantity = parseInt(quantityText); // Parse the quantity as an integer
+      document.getElementById("editName").value = name;
+      document.getElementById("editQuantity").value = quantity;
+      document.getElementById("editPartner").value = partnerId; // Set the partner ID in the dropdown
+
+      // Show the edit form and hide the creation form
+      document.getElementById("editForm").style.display = "block";
+      document.getElementById("creationForm").style.display = "none";
+
+      // Set the data-id attribute of the edit form to the ID of the small storage entry
+      document.getElementById("editForm").setAttribute("data-id", id);
+  }
+
+  $(document).ready(function() {
+    // Submit edit form
+    $("#editForm").submit(function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get form data
+        const formData = $(this).serialize();
+        const id = $(this).attr("data-id"); // Retrieve the data-id attribute
+
+        console.log("Form Data:", formData);
+        console.log("ID:", id);
+
+        // Perform AJAX POST request
+        $.ajax({
+            url: '/edit_small_storage',
+            type: 'POST',
+            data: formData + '&id=' + id, // Include the id in the form data
+            success: function(response) {
+                console.log("Response:", response); // Log the response from the backend
+                if (response.success) {
+                    // Reload the page to see the updated small storage entry
+                    location.reload();
+                } else {
+                    alert('Error: ' + response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('An error occurred while saving the changes.');
+            }
+        });
+    });
+});
+
+
+function returnQuantity(small_storage_id) {
+    // Get the form data
+    const form = document.getElementById(`returnForm${small_storage_id}`);
+    const formData = new FormData(form);
+
+    // Create an AJAX request to submit the form data
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // Add this header for Flask to detect AJAX request
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Redirect to partners page after successful return
+            window.location.href = "{{ url_for('partners') }}";
+        } else {
+            // Handle error
+            alert('An error occurred while processing your request.');
+        }
+    };
+    xhr.send(formData);
+
+    // Prevent the default form submission
+    event.preventDefault();
+}
+</script>
+
+</ul>
+</html>
+
+
+
+
+</html>
