@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>S-FRUKT - Partners</title>
+    <!-- Include jQuery for AJAX functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favedit.ico">
+    <!-- Include Bootstrap CSS for styling, if needed -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="{{ url_for('static', filename='cherry-animation.js') }}"></script>
+    <script src="/static/favicon.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: fixed;
+        background-color: black;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #ffffff;
+        font-family: Arial, monospace;
+    }
+
+    .button-1 {
+        margin: 10px;
+        padding: 10px 15px;
+        background-color: #ff0000;
+        color: #ffffff;
+        border: 2px solid #ff0000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        font-family: monospace;
+    }
+
+    .button-2 {
+        margin: 10px;
+        padding: 5px 15px;
+        background-color: #fcc404;
+        color: #ffffff;
+        border: 2px solid #fcc404;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        font-family: monospace;
+    }
+
+    button:hover {
+        background-color: rgb(0, 0, 0);
+        color: #ffffff;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        width: 50%;
+        max-width: 400px;
+    }
+
+    .centered-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-button-container {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .right-button-container {
+        position: fixed;
+        top: 96px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+    }
+
+    .conditional-content {
+        display: none;
+    }
+
+    form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    label {
+        margin: 5px 0;
+        font-size: 18px;
+    }
+
+    input {
+        padding: 8px;
+        margin: 5px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .li_2 {
+        background-color: #062b55;
+        margin: 7px;
+        padding: 10px;
+        text-align: center;
+        font-family: monospace;
+        font-size: 110%;
+    }
+
+    .li_1 {
+        background-color: #ff0000;
+        margin: 7px;
+        padding: 8px;
+        text-align: center;
+        font-family: monospace;
+        width: 93%;
+        color: #ffffff;
+        border-color: #ff0000;
+    }
+
+    .card {
+        background-color: rgba(73, 73, 73, 0.9);
+        margin: 8px;
+        padding: 8px;
+        text-align: center;
+        width: 200px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-2 {
+        background-color: rgba(0, 96, 160, 0.9);
+        border-radius: 5px;
+        margin: 10px;
+        padding: 12px;
+        text-align: center;
+        width: fit-content;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: monospace;
+        flex-direction: row;
+        display: flex;
+    }
+
+    .buttonedit {
+        margin: 5px;
+        padding: 10px 10px;
+        background-color: #ff0000;
+        color: #ffffff;
+        border: 2px solid #ff0000;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 12px;
+        font-family: monospace;
+    }
+
+    .search-box {
+        position: fixed;
+        top: 3%;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        width: 20%;
+    }
+
+    #storageSearch {
+        padding: 8px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    .delete-all-button-container {
+        position: fixed;
+        top: 17%;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        font-family: monospace;
+    }
+
+    #delete-all-partners-btn {
+        margin-top: 10px;
+    }
+
+    .right-button-container-1 {
+        position: fixed;
+        top: 105px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #d3366d;
+        border-color: #d3366d;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .right-button-container-2 {
+        position: fixed;
+        top: 165px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #d3366d;
+        border-color: #d3366d;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .right-button-container-3 {
+        position: fixed;
+        top: 226px;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        background-color: #d3366d;
+        border-color: #d3366d;
+        transition: all 0.3s ease;
+        color: #ffffff;
+    }
+
+    .select-1 {
+        background-color: #494949;
+        color: #ffffff;
+        position: fixed;
+        top: 11%;
+        right: 1.4%;
+        font-family: monospace;
+        width: 16%;
+        padding: 8px;
+        border-radius: 8px;
+    }
+
+    .partner-name-link {
+        color: #ffffff; /* Set the text color */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        text-decoration: solid;
+    }
+
+    /* Style for visited links */
+    .partner-name-link:visited {
+        color: #ffffff; /* Change color of visited links */
+    }
+
+    /* Style for link hover */
+    .partner-name-link:hover {
+        color: #fcc404; /* Change color on hover */
+    }
+
+</style>
+
+    <!-- AJAX script for editing partners -->
+   
+
+    <div class="delete-all-button-container">
+        <button id="delete-all-partners-btn" class="button-2"><b>Obriši Sve</b></button>
+    </div>
+    <a href="{{ url_for('home') }}"><button class=" button-1 left-button-container"><b>Početna</b></button></a>
+    
+    <div class="search-box">
+        <input type="text" id="storageSearch" placeholder="Pretraži Partnera">
+    </div>
+    <div>
+        <select class="select-1" onchange="navigateToPage(this.value)">
+            <option value="" disabled selected>Napredne Opcije</option>
+            <option value="{{ url_for('create_small_storage') }}">Pregledaj Otkupljivače</option>
+            <option value="{{ url_for('adjust_main_storage') }}">Pregledaj Glavno Skladište</option>
+            <option value="/transaction_logs">Pregledaj Dnevnik Transakcija</option>
+        </select>
+        <style>
+            .list-group-item {
+                background-color: rgb(61, 61, 61); /* Set card background color to black */
+                color: rgb(255, 255, 255); /* Set text color to white */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Create Partner</h1>
+            <form method="post">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    <label for="partnerName">Name:</label>
+                    <input type="text" name="name" id="partnerName" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+        
+        <div class="container mt-5">
+            <h1>Partners</h1>
+            <ul class="list-group">
+                {% for partner in partners %}
+                    <li class="list-group-item">
+                        {{ partner.name }} - Balance: {{ partner.balance }}
+                        <form method="post" class="float-right">
+                            {{ form.csrf_token }}
+                            <input type="hidden" name="delete_partner" value="{{ partner.id }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Submit form using AJAX
+            $('#partnerForm').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+                var formData = $(this).serialize(); // Serialize form data
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        // Add new partner card to the list
+                        $('#partnerList').append(`
+                            <div class="card partner-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${response.name}</h5>
+                                    <p class="card-text">Balance: ${response.balance}</p>
+                                    <p class="card-text">Creation Time: ${response.timestamp}</p>
+                                </div>
+                            </div>
+                        `);
+                        // Clear form fields
+                        $('#partnerForm')[0].reset();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    
+        function navigateToPage(url) {
+            if (url) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</body>
